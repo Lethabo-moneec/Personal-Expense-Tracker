@@ -26,6 +26,11 @@ def view_expenses_for_category(category):
 
     return f"{category.capitalize()} Total: {get_total_for_category(category)}\n"
 
+def view_all_expenses():
+    for k in expenses.keys():
+        view_expenses_for_category(k)
+        print()
+
 def get_total():
     print('getting total')
     total_spending = 0
@@ -58,7 +63,7 @@ def view_categories():
 
 
 options = {
-    '1': view_expenses_for_category,
+    '1': view_all_expenses,
     '2': view_categories,
     '3': get_total
 }
@@ -69,22 +74,11 @@ Select option:
     2. Something else
 """
 
-
 categories = view_categories()
 op = input(".")
 category = categories[op]
 view_expenses_for_category(category)
-# print(view_categories())
-# def veiw_options():
-#     print("1. View All Expense")
-#     print("2. View Categories")
-#     prin
-#     t("3. View Total Spendings")
-#     print("4. Add New Expense")
-#     print("5. Exit")
-#     print()
 
-# view_all_expences(expenses)
 
 # try:
 #     while True:
