@@ -17,6 +17,84 @@ with open("expenses.csv", "r") as file:
         else:
             expenses[category].append(expense)
 
+def view_expenses_for_category(category):
+    values = expenses[category]
 
-for k, v in expenses.items():
-    print(f"{k}: {v}")
+    print(category.capitalize())
+    for price, description in values:
+        print(f"{description}: {price}")
+
+    return f"{category.capitalize()} Total: {get_total_for_category(category)}\n"
+
+def get_total():
+    print('getting total')
+    total_spending = 0
+
+    for k in expenses.keys():
+        total_spending += get_total_for_category(k)
+
+    return total_spending
+
+def get_total_for_category(category):
+    total = 0
+    values = expenses[category]
+
+    for amount, _ in values:
+        total += float(amount)
+
+    return total
+
+
+def view_categories():
+    category = {}
+    count = 1
+    print("Select option:")
+    for key in expenses.keys():
+        print(f"\t{count}: {key.capitalize()}")
+        category[str(count)] = key
+        count += 1
+
+    return category
+
+
+options = {
+    '1': view_expenses_for_category,
+    '2': view_categories,
+    '3': get_total
+}
+
+menu = """
+Select option:
+    1. View Expense
+    2. Something else
+"""
+
+
+categories = view_categories()
+op = input(".")
+category = categories[op]
+view_expenses_for_category(category)
+# print(view_categories())
+# def veiw_options():
+#     print("1. View All Expense")
+#     print("2. View Categories")
+#     prin
+#     t("3. View Total Spendings")
+#     print("4. Add New Expense")
+#     print("5. Exit")
+#     print()
+
+# view_all_expences(expenses)
+
+# try:
+#     while True:
+#         veiw_options()
+#
+#         num = int(input("Select Option: "))
+#
+# except:
+#     print("ok")
+
+
+# print_menu(expenses)
+# print(get_totals(expenses))
