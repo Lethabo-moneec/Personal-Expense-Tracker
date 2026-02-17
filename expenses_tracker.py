@@ -31,6 +31,7 @@ def view_all_expenses():
         view_expenses_for_category(k)
         print()
 
+#calclate overall total
 def get_total():
     print('getting total')
     total_spending = 0
