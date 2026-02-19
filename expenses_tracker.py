@@ -24,22 +24,22 @@ def view_expenses_for_category(category):
     for price, description in values:
         print(f"{description}: {price}")
 
-    return f"{category.capitalize()} Total: {get_total_for_category(category)}\n"
+    return f"       {category.capitalize()} Total: {get_total_for_category(category)}\n"
 
 def view_all_expenses():
+    print()
     for k in expenses.keys():
-        view_expenses_for_category(k)
+        print(view_expenses_for_category(k))
         print()
 
 #calclate overall total
 def get_total():
-    print('getting total')
     total_spending = 0
 
     for k in expenses.keys():
         total_spending += get_total_for_category(k)
 
-    return total_spending
+    print(f"Total spending: {total_spending}")
 
 def get_total_for_category(category):
     total = 0
@@ -54,42 +54,70 @@ def get_total_for_category(category):
 def view_categories():
     category = {}
     count = 1
-    print("Select option:")
+    # print("Select option:")
     for key in expenses.keys():
         print(f"\t{count}: {key.capitalize()}")
-        category[str(count)] = key
+        category[(count)] = key
         count += 1
 
     return category
 
 
+import csv
+
+def add_expense():
+   
+    category = input("Enter category: ").strip()
+    description = input("Enter description: ").strip()
+    amount = input("Enter price: ").strip()
+
+
+    new_expense = [category, amount, description]
+
+
+    with open(expenses.csv, mode="a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(new_expense)
+
+    print("Expense added successfully!")
+
+
+
 options = {
     '1': view_all_expenses,
     '2': view_categories,
-    '3': get_total
+    '3': get_total,
+    '4': add_expense
+
 }
 
-menu = """
-Select option:
-    1. View Expense
-    2. Something else
-"""
 
-categories = view_categories()
-op = input(".")
-category = categories[op]
-view_expenses_for_category(category)
+try:
+    while True:
 
+        menu = """
+            Select option:
+                1. View Expense
+                2. View Categories
+                3. View Total
+                4. Add Expense
+                5. Exit
+            """
+        
+        print(menu)
 
-# try:
-#     while True:
-#         veiw_options()
-#
-#         num = int(input("Select Option: "))
-#
-# except:
-#     print("ok")
+        num = input("Select Option: ")
 
+        if num == "5":
+            break
 
-# print_menu(expenses)
-# print(get_totals(expenses))
+        func = options[num]
+        func()
+        if num == "2":
+            op = int(input("Select Option: "))
+            category = view_categories
+            print(category)
+            view_expenses_for_category(category)
+
+except:
+    print("ok")
